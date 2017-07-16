@@ -68,7 +68,7 @@ module BatchApi
         @env["QUERY_STRING"] = qs
 
         # parameters
-        @env["rack.request.form_hash"] = @params
+        @env["rack.request.form_hash"] = @method == "get" ? @params : nil
         @env["rack.request.query_hash"] = @method == "get" ? @params : nil
       end
     end
