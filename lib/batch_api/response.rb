@@ -29,9 +29,10 @@ module BatchApi
       # not be suitable for JSON serialization
       # (I'm looking at you, ActionDispatch::Response)
       # so turn it into a string
+      byebug
       base_body = ""
       body_pieces.each {|str| base_body << str}
-      base_body
+      MultiJson.load(base_body)
     end
   end
 end
