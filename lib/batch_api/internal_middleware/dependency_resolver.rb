@@ -1,8 +1,7 @@
 require 'liquid'
 module BatchApi
   module InternalMiddleware
-    # Public: a middleware that decodes the body of any individual batch
-    # operation if it's JSON.
+    
     class DependencyResolver
       SUCCESS_CODES = (200..299).freeze
       # Public: initialize the middleware.
@@ -12,7 +11,7 @@ module BatchApi
 
       def call(env)
         op = env[:op]
-        if env[:options]["dependencies"] && op.depends_on.any?
+        if op.depends_on.any?
           msg, err = resolve_dependencies(op, env[:results])
           if err
             return BatchApi::Response.new([422, {"Content-Type" => "application/json"}, [{ "error" => msg }.to_json]])

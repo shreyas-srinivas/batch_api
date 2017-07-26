@@ -2,8 +2,6 @@ module BatchApi
   class Processor
     class Sequential
       # Public: initialize with the app.
-      SUCCESS_CODES = (200..299).freeze
-
       def initialize(app)
         @app = app
       end
@@ -25,12 +23,10 @@ module BatchApi
           middleware = InternalMiddleware.operation_stack
           middleware.call(env).tap { |r|
             env.delete(:op)
-            if env[:options]["dependencies"]
-              if SUCCESS_CODES.include?(r.status)
-                env[:results] << r.body
-              else
-                env[:results] << {errors: true}
-              end
+            if SUCCESS_CODES.include?(r.status)
+              env[:results] << r.body
+            else
+              env[:results] << {errors: true}
             end
           }
         end
