@@ -2,6 +2,8 @@ module BatchApi
   class Processor
     class Sequential
       # Public: initialize with the app.
+      SUCCESS_CODES = (200..299).freeze
+
       def initialize(app)
         @app = app
       end
