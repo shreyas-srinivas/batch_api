@@ -82,7 +82,7 @@ module BatchApi
           "#{ops.length} were provided"
       else
         ops.each_with_index.map do |op, i|
-          self.class.operation_klass.new(op, i, @env, @app)
+          self.class.operation_klass.new(op, @env, @app, i)
         end
       end
     end

@@ -10,7 +10,7 @@ module BatchApi
       # Public: create a new Batch Operation given the specifications for a batch
       # operation (as defined above) and the request environment for the main
       # batch request.
-      def initialize(op, index, base_env, app)
+      def initialize(op, base_env, app, index)
         @op = op
 
         @method = op["method"] || "get"
@@ -25,7 +25,7 @@ module BatchApi
           "and url (received #{@url.inspect})" unless @method && @url
         raise Errors::MalformedOperationError,
           "depends_on must be an array of integers and must depend on previous requests" unless (@depends_on.is_a?(Array) &&
-            !@depends_on.detect{|d| !d.is_a?(Integer) || d >= index })
+            !@depends_on.detect{|d| !d.is_a?(Integer) || d >= index || d < 0})
 
         @app = app
         # deep_dup to avoid unwanted changes across requests
