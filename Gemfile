@@ -28,7 +28,7 @@ group :development, :test do
   gem "jdbc-sqlite3", :platform => :jruby
 
   #Not sure which version to use here. Let the App decide the liquid version.
-  gem "liquid"
+  gem "liquid", "~> 2.4.1"
 
   group :darwin do
     # OS X integration
